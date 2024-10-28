@@ -83,6 +83,7 @@ https://wiki.ros.org/
 
 ---
 ## 6. 소개 영상
+[![2024 전기 졸업과제 Joy Security](https://img.youtube.com/vi/Ctr1C__ml1Q/0.jpg)](https://www.youtube.com/watch?v=Ctr1C__ml1Q&t=6s)
 
 
 ---
