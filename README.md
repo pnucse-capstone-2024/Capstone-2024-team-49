@@ -63,23 +63,135 @@
 - 공격자가 PX4의 UDP port로 접속을 하여 px4와 연결에 성공하여도, 서명이 활성화 되어 있는 상태라면, 공격자의 제어 명령이 무시된다.
 - 키 값이 노출되어 공격자가 서명을 생성할 수 있게 되어도, 서명 스트림이 공격자의 system id와 component id를 가리키지 않기 때문에 서명 검증에 실패하게 된다.
   
-  <img src="https://github.com/user-attachments/assets/e9b6bbe9-ef44-432c-a450-cca25b4a4e97" width="60%" height="60%"/>
+  <img src="https://github.com/user-attachments/assets/fdba3b69-1364-4a30-9e58-6ac5d6bf4ead" width="60%" height="60%"/>
 
 
 
 
 ---
 ## 5. 설치 및 사용법
-### 5.1. PX4-Autopilot
-https://docs.px4.io/main/en/index.html
+- 아래의 설치 방법은 간략한 설명으로, 설치 과정에서 문제 발생 시 참고 링크 또는 공식 문서를 참고하면 도움이 될 수 있습니다.
+- 드론 소유자의 PC와 공격자의 PC를 가정하므로, 가상 머신이 총 2대 필요합니다.
 
-### 5.2. QGroundControl
-https://docs.qgroundcontrol.com/master/en/
+### 5.1. Ubuntu Desktop 설치 (드론 소유자, 공격자)
 
-### 5.3. ROS
-https://wiki.ros.org/
+- ROS Noetic과의 호환을 위해 20.04 버전 다운로드
+    - 다운로드 링크: https://ubuntu.com/download/alternative-downloads
+    - Ubuntu 홈페이지 - Alternative downloads - Ubuntu 20.04 LTS (Focal Fossa) - Desktop image
+- 이미지 적용 후 VMWare, VirtualBox 등에서 가상 머신 생성<br />
 
-...
+### 5.2. PX4-Autopilot 설치 (드론 소유자)
+
+- 참고 링크: https://docs.px4.io/v1.14/ko/dev_setup/dev_env_linux_ubuntu.html
+
+**5.2.1. PX4 펌웨어 설치**
+
+- (Ubuntu) 터미널에 아래의 명령어를 입력
+
+```
+$ git clone https://github.com/PX4/PX4-Autopilot.git --recursive
+$ bash ./PX4-Autopilot/Tools/setup/ubuntu.sh --no-sim-tools --no-nuttx
+```
+
+- PX4-Autopilot 디렉토리에 대해, Github에 업로드된 디렉토리 및 파일을 덮어쓰기
+
+**5.2.2. Gazebo 시뮬레이터 설치**
+
+- 참고 링크: https://docs.px4.io/v1.14/ko/sim_gazebo_gz/
+- 터미널에 아래의 명령어를 입력
+
+```
+$ sudo wget https://packages.osrfoundation.org/gazebo.gpg -O /usr/share/keyrings/pkgs-osrf-archive-keyring.gpg
+$ echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg] http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/gazebo-stable.list > /dev/null
+$ sudo apt-get update
+$ sudo apt-get install gz-garden
+```
+
+**5.2.3. PX4 시뮬레이터 빌드**
+
+- PX4-Autopilot 디렉토리로 이동 후, 터미널에 아래의 명령어를 입력하여 Gazebo 빌드 및 실행
+
+```
+$ make px4_sitl gazebo
+```
+
+### 5.3. QGroundControl 설치
+
+**5.3.1. QGroundControl (드론 소유자)**
+
+- 아래의 링크에서 압축 파일을 받고 압축 해제, 디렉토리 내 “QGroundControl” 파일을 실행
+    - https://www.dropbox.com/scl/fi/k9l7mtvhrin79zed75nku/Release.tar.xz?rlkey=5havfnomwqjyogiv1tkw6q1sk&st=0ii45tvw&dl=0
+- 다른 방법으로 qgroundcontrol 디렉토리에 대해, Github에 업로드된 디렉토리 및 파일을 덮어쓴 후 Qt를 이용하여 직접 빌드
+
+**5.3.2. QGroundControl (공격자)**
+
+- 아래 참고 링크의 “Ubuntu Linux” 항목에서, AppImage 파일을 다운로드 받고, 실행 권한 변경
+    - 참고 링크: https://docs.qgroundcontrol.com/Stable_V4.3/en/qgc-user-guide/getting_started/download_and_install.html
+
+### 5.4. ROS, MAVROS 설치 (드론 소유자)
+
+**5.4.1. ROS Noetic 설치**
+
+- 아래 참고 링크의 내용을 따라 설치 진행
+    - 참고 링크: https://wiki.ros.org/noetic/Installation/Ubuntu#Installation
+- 터미널에서 아래의 명령어 입력 시, ROS가 실행됨
+
+```
+$ roscore
+```
+
+**5.4.2. MAVROS 빌드**
+
+- catkin_ws 디렉토리에 대해, Github에 업로드된 디렉토리 및 파일을 덮어쓰기
+- catkin_ws 디렉토리로 이동 후, 터미널에 아래의 명령어 입력하여 MAVROS 빌드
+
+```
+$ catkin build
+```
+
+- 빌드가 끝나면, catkin_ws 디렉토리의 터미널에 아래의 명령어 입력하여 MAVROS 실행
+
+```
+$ export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:$(pwd)
+$ roslaunch mavros px4.launch
+```
+
+### 5.5. key 디렉토리 생성 (드론 소유자)
+
+- home 디렉토리로 이동 후, 터미널에 아래의 명령어를 입력하여 key 디렉토리를 생성
+
+```
+$ mkdir key
+```
+
+### 5.6. 사용법
+
+**5.6.1. 초기 설정**
+
+- 공격자의 가상 머신 내 QGC에서 UDP 포트를 설정
+    - QGC - Application Settings - Comm Links - Add - 아래와 같이 설정 - OK - connect
+        
+      <img src="https://github.com/user-attachments/assets/06adac9b-ba2b-4947-acb2-01a32ca4ef0b" width="30%" height="30%"/>
+        
+    - (여기서 “192.168.191.134” 부분은 소유자 가상 머신의 ip로, 변경 필요)
+    - 설정이 끝나면, 공격자의 가상 머신 QGC 종료
+
+---
+
+**5.6.2. 사용**
+
+- 드론 소유자의 가상 머신에서 ROS, MAVROS를 실행
+- 드론 소유자의 가상 머신에서 PX4-Autopilot을 실행
+    - Gazebo 터미널에서, 공격자의 QGC와 통신이 가능하도록 통신 포트를 open
+        
+        ```
+        pxh> mavlink start -u 14551 -r 40000
+        ```
+        
+- 공격자의 QGC와, 드론 소유자의 QGC를 순서대로 실행
+- 드론 소유자의 QGC에서 서명 기능 활성화
+    - 드론 소유자의 QGC - Application Settings - Telemetry - Enable Signature 버튼 클릭
+- 드론 소유자, 공격자의 QGC에서 Takeoff, Land, Return, Go to location 명령 실행
 
 ---
 ## 6. 소개 영상
