@@ -70,15 +70,19 @@
 
 ---
 ## 5. 설치 및 사용법
-- 아래의 설치 방법은 간략한 설명으로, 설치 과정에서 문제 발생 시 참고 링크 또는 공식 문서를 참고하면 도움이 될 수 있습니다.
-- 드론 소유자의 PC와 공격자의 PC를 가정하므로, 가상 머신이 총 2대 필요합니다.
+- 아래의 설치 방법은 간략한 설명으로, 설치 과정에서 문제 발생 시 참고 링크 또는 공식 문서를 참고하면 도움이 될 수 있음.
+- 드론 소유자의 PC와 공격자의 PC를 가정하므로, 가상 머신이 총 2대 필요함.
+
+<br />
 
 ### 5.1. Ubuntu Desktop 설치 (드론 소유자, 공격자)
 
 - ROS Noetic과의 호환을 위해 20.04 버전 다운로드
     - 다운로드 링크: https://ubuntu.com/download/alternative-downloads
     - Ubuntu 홈페이지 - Alternative downloads - Ubuntu 20.04 LTS (Focal Fossa) - Desktop image
-- 이미지 적용 후 VMWare, VirtualBox 등에서 가상 머신 생성<br />
+- 이미지 적용 후 VMWare, VirtualBox 등에서 가상 머신 생성
+
+<br />
 
 ### 5.2. PX4-Autopilot 설치 (드론 소유자)
 
@@ -115,6 +119,8 @@ $ sudo apt-get install gz-garden
 $ make px4_sitl gazebo
 ```
 
+<br />
+
 ### 5.3. QGroundControl 설치
 
 **5.3.1. QGroundControl (드론 소유자)**
@@ -127,6 +133,8 @@ $ make px4_sitl gazebo
 
 - 아래 참고 링크의 “Ubuntu Linux” 항목에서, AppImage 파일을 다운로드 받고, 실행 권한 변경
     - 참고 링크: https://docs.qgroundcontrol.com/Stable_V4.3/en/qgc-user-guide/getting_started/download_and_install.html
+
+<br />
 
 ### 5.4. ROS, MAVROS 설치 (드론 소유자)
 
@@ -156,6 +164,8 @@ $ export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:$(pwd)
 $ roslaunch mavros px4.launch
 ```
 
+<br />
+
 ### 5.5. key 디렉토리 생성 (드론 소유자)
 
 - home 디렉토리로 이동 후, 터미널에 아래의 명령어를 입력하여 key 디렉토리를 생성
@@ -163,6 +173,8 @@ $ roslaunch mavros px4.launch
 ```
 $ mkdir key
 ```
+
+<br />
 
 ### 5.6. 사용법
 
@@ -176,7 +188,6 @@ $ mkdir key
     - (여기서 “192.168.191.134” 부분은 소유자 가상 머신의 ip로, 변경 필요)
     - 설정이 끝나면, 공격자의 가상 머신 QGC 종료
 
----
 
 **5.6.2. 사용**
 
