@@ -115,6 +115,7 @@ $ sudo apt-get install gz-garden
 - PX4-Autopilot 디렉토리로 이동 후, 터미널에 아래의 명령어를 입력하여 Gazebo 빌드 및 실행
 
 ```
+$ cd ~/PX-Autopilot
 $ make px4_sitl gazebo
 ```
 
@@ -153,6 +154,7 @@ $ roscore
 - catkin_ws 디렉토리로 이동 후, 터미널에 아래의 명령어 입력하여 MAVROS 빌드
 
 ```
+$ cd ~/catkin_ws
 $ catkin build
 ```
 
@@ -170,6 +172,7 @@ $ roslaunch mavros px4.launch
 - home 디렉토리로 이동 후, 터미널에 아래의 명령어를 입력하여 key 디렉토리를 생성
 
 ```
+$ cd ~
 $ mkdir key
 ```
 
