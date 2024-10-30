@@ -71,7 +71,6 @@
 ---
 ## 5. 설치 및 사용법
 - 아래의 설치 방법은 간략한 설명으로, 설치 과정에서 문제 발생 시 참고 링크 또는 공식 문서를 참고하면 도움이 될 수 있음.
-- 드론 소유자의 PC와 공격자의 PC를 가정하므로, 가상 머신이 총 2대 필요함.
 
 <br />
 
@@ -178,31 +177,13 @@ $ mkdir key
 
 ### 5.6. 사용법
 
-**5.6.1. 초기 설정**
+- 위 과정을 모두 마치면 Gazebo 시뮬레이터의 PX4 드론과 QGC가 연결이 됨
+- 
+**5.6.1. 사용**
 
-- 공격자의 가상 머신 내 QGC에서 UDP 포트를 설정
-    - QGC - Application Settings - Comm Links - Add - 아래와 같이 설정 - OK - connect
-        
-      <img src="https://github.com/user-attachments/assets/06adac9b-ba2b-4947-acb2-01a32ca4ef0b" width="30%" height="30%"/>
-        
-    - (여기서 “192.168.191.134” 부분은 소유자 가상 머신의 ip로, 변경 필요)
-    - 설정이 끝나면, 공격자의 가상 머신 QGC 종료
-
-
-**5.6.2. 사용**
-
-- 드론 소유자의 가상 머신에서 ROS, MAVROS를 실행
-- 드론 소유자의 가상 머신에서 PX4-Autopilot을 실행
-    - Gazebo 터미널에서, 공격자의 QGC와 통신이 가능하도록 통신 포트를 open
-        
-        ```
-        pxh> mavlink start -u 14551 -r 40000
-        ```
-        
-- 공격자의 QGC와, 드론 소유자의 QGC를 순서대로 실행
-- 드론 소유자의 QGC에서 서명 기능 활성화
-    - 드론 소유자의 QGC - Application Settings - Telemetry - Enable Signature 버튼 클릭
-- 드론 소유자, 공격자의 QGC에서 Takeoff, Land, Return, Go to location 명령 실행
+- 가상 머신에서 ROS, MAVROS를 실행
+- PX4-Autopilot을 실행
+- QGC 실행 후 QGC의 Application settings -> Telemtry 메뉴에서 "Enable Signing" 버튼을 클릭하면 서명이 활성화 됨
 
 ---
 ## 6. 소개 영상
